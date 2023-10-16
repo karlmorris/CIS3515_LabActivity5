@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
 
+        spinner.adapter = CustomAdapter(names, this)
+
         with (spinner) {
-            adapter = CustomAdapter(names, this@MainActivity)
             onItemSelectedListener = object: OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     p0?.run {
