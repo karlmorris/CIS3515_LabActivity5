@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                         nameTextView.text = getItemAtPosition(p2).toString()
                     }
                 }
-
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
             }
