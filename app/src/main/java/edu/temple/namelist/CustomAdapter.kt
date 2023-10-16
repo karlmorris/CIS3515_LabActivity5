@@ -10,7 +10,7 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
 
     // How many items are in the collection
     override fun getCount(): Int {
-        return 5
+        return names.size
     }
 
     // Fetch an item from the collection
@@ -35,5 +35,10 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
         }.apply {
             text = getItem(p0).toString()
         }
+    }
+
+    fun removeItem(p0: Int) {
+        (names as MutableList).removeAt(p0)
+        notifyDataSetChanged()
     }
 }
