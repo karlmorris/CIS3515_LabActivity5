@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
             if (names.size == 1){
                 (names as MutableList).removeAt(spinner.selectedItemPosition)
                 nameTextView.text = "All names deleted."
-                //Toast.makeText(this@MainActivity, "Cannot delete name", Toast.LENGTH_SHORT).show()
             }
             else{
                 (names as MutableList).removeAt(spinner.selectedItemPosition)
