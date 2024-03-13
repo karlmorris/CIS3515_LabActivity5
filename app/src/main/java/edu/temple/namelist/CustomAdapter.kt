@@ -13,6 +13,7 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
         return names.size - 1
     }
 
+
     // Fetch an item from the collection
     override fun getItem(p0: Int): Any {
         return names[p0]
