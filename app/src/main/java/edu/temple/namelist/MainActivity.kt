@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 name.remove(it)
                 names = name
                 spinner.adapter = CustomAdapter(names, this@MainActivity)
-                nameTextView.text = ""
+                nameTextView.text = "a"
 
             }
         }
