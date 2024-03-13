@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NameList</string>
+    <string name="all_names_deleted">All names deleted</string>
 </resources>
