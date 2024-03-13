@@ -40,9 +40,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.deleteButton).setOnClickListener {
             if (names.isEmpty())
                 Toast.makeText(this, "No more names left in list", Toast.LENGTH_SHORT).show()
-            else
+            else {
+                val nextItem = spinner.selectedItemPosition
                 (names as MutableList).removeAt(spinner.selectedItemPosition)
                 (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+                nameTextView.text = names.getOrNull(nextItem)
+            }
         }
 
     }
