@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isEmpty
 
 class MainActivity : AppCompatActivity() {
@@ -38,14 +39,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            nameTextView.text =
-                if (spinner.selectedItemPosition == names.size){
-                    (names as MutableList)[spinner.selectedItemPosition - 1]
-                }
-                else{
-                    (names as MutableList)[spinner.selectedItemPosition]
-                }
+            if (names.size == 1){
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                nameTextView.text = "All names deleted."
+                //Toast.makeText(this@MainActivity, "Cannot delete name", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                nameTextView.text =
+                    if (spinner.selectedItemPosition == names.size){
+                        (names as MutableList)[spinner.selectedItemPosition - 1]
+                    }
+                    else{
+                        (names as MutableList)[spinner.selectedItemPosition]
+                    }
+            }
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
         }
 
