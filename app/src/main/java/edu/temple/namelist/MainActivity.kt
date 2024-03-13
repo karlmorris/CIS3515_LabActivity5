@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+                    nameTextView.text = context.getString(R.string.all_names_deleted)
                 }
             }
         }
