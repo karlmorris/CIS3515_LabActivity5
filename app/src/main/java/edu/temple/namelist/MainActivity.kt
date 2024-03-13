@@ -32,14 +32,22 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    nameTextView.text = context.getString(R.string.all_names_deleted)
                 }
             }
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+            if (names.isNotEmpty()) {
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+                nameTextView.text = ""
+            }
+            else {
+                nameTextView.text = "Empty List"
+            }
+
+
         }
 
     }
