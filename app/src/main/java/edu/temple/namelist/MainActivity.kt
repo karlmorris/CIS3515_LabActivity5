@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
             nameTextView.text = spinner.selectedItem.toString()
+            if (names.size == 1) {
+                it.isEnabled = false
+            }
         }
 
     }
