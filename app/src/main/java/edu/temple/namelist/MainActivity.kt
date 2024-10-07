@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         with (spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
             onItemSelectedListener = object: OnItemSelectedListener {
+
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     p0?.run {
                         nameTextView.text = getItemAtPosition(p2).toString()
@@ -37,8 +38,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val position = spinner.selectedItemPosition
+
+            if(position >=0 && position < names.size ){
+
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
+
         }
 
     }
