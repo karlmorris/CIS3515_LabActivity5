@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.deleteButton).setOnClickListener {
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            nameTextView.text = spinner.getItemAtPosition(spinner.selectedItemPosition).toString()
         }
 
     }
