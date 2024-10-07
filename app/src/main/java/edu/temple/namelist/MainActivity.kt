@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,13 +33,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+                    nameTextView.text = "No names"
                 }
             }
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val selectedPosition = spinner.selectedItemPosition // grab the currently selected name
+            if (selectedPosition != -1) { // check if it's null
+                (names as MutableList).removeAt(selectedPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+            }
+
         }
 
     }
