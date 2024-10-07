@@ -35,11 +35,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
+        //Fixed index out of bounds
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val position = spinner.selectedItemPosition
+            if (position >= 0 && position < names.size) {
+                (names as MutableList).removeAt(position)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
         }
+
 
     }
 }
