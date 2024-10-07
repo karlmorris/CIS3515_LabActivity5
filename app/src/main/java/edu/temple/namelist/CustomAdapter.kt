@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class CustomAdapter(private val names: List<String>, private val context: Context) : BaseAdapter() {
+class CustomAdapter(private val names: MutableList<String>, private val context: Context) : BaseAdapter() {
 
     // How many items are in the collection
     override fun getCount(): Int {
-        return 5
+        return names.size
     }
 
     // Fetch an item from the collection
