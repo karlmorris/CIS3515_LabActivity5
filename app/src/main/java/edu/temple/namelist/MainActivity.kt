@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
+    lateinit var names: MutableList<String>
 
-    lateinit var names: List<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,25 +19,38 @@ class MainActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
-        with (spinner) {
-            adapter = CustomAdapter(names, this@MainActivity)
-            onItemSelectedListener = object: OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    p0?.run {
-                        nameTextView.text = getItemAtPosition(p2).toString()
-                    }
-                }
+        val adapter = CustomAdapter(names, this)
+        spinner.adapter = adapter
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position >= 0 && position < names.size) {
+                    nameTextView.text = names[position]
                 }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                nameTextView.text = ""
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
-        }
+        deleteButton.setOnClickListener {
+            val position = spinner.selectedItemPosition
+            if (position != AdapterView.INVALID_POSITION) {
+                val deletedName = names[position]
+                names.removeAt(position)
+                adapter.notifyDataSetChanged()
 
+                if (nameTextView.text == deletedName) {
+                    if (names.isNotEmpty()) {
+                        nameTextView.text = names[if (position < names.size) position else names.size - 1] // Set to the next item or the last one.
+                    } else {
+                        nameTextView.text = ""
+                    }
+                }
+            }
+        }
     }
 }
