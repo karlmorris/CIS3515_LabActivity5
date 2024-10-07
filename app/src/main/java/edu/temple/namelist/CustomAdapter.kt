@@ -10,11 +10,14 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
 
     // How many items are in the collection
     override fun getCount(): Int {
-        return 5
+        return names.size
     }
 
     // Fetch an item from the collection
     override fun getItem(p0: Int): Any {
+        if (count == 0)
+            return "There are no items left"
+
         return names[p0]
     }
 
