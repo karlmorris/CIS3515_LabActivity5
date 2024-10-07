@@ -37,9 +37,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            if(names.isEmpty()) return@setOnClickListener
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            //Now the names can be deleted, but when all the names are deleted,
+            //the app crashes again if you try to delete from a empty list
+            //So we first check if the array is empty first before deleting and updating
+            if(names.isEmpty()) { return@setOnClickListener}
+             else {(names as MutableList).removeAt(spinner.selectedItemPosition)
+            (spinner.adapter as BaseAdapter).notifyDataSetChanged()}
         }
 
     }
