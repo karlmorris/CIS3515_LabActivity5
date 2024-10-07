@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,13 +33,18 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+
                 }
             }
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if(names.size>0) {
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }else{
+                Toast.makeText(this, "No more names to delete", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }

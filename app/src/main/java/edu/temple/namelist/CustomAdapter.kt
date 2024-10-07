@@ -9,6 +9,7 @@ import android.widget.TextView
 class CustomAdapter(private val names: List<String>, private val context: Context) : BaseAdapter() {
 
     // How many items are in the collection
+
     override fun getCount(): Int {
         return names.size
     }
