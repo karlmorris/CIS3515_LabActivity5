@@ -40,9 +40,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.deleteButton).setOnClickListener {
             val position = spinner.selectedItemPosition
 
-            if(position >=0 && position < names.size )
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if(position >=0 && position < names.size ){
+
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
+
         }
 
     }
