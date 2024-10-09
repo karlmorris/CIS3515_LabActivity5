@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,13 +33,20 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+                    spinner.setSelection(0)
                 }
             }
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if (names.size<2) {
+                val toast = Toast.makeText(this,"Cannot delete more",Toast.LENGTH_SHORT)
+                toast.show()
+            }
+            else{
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
         }
 
     }
