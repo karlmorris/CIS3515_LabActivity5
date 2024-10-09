@@ -10,7 +10,7 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
 
     // How many items are in the collection
     override fun getCount(): Int {
-        return 5
+        return names.size
     }
 
     // Fetch an item from the collection
@@ -27,7 +27,8 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         return if (p1 != null) {
             p1 as TextView
-        } else {
+        }
+        else {
             TextView(context).apply {
                 textSize = 24f
                 setPadding(10,10,10,10)
