@@ -12,7 +12,9 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var names: List<String>
+    // Mutable list
+    lateinit var names: MutableList<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,9 +38,38 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+        /*
+
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val position = spinner.selectedItemPosition
+            // since names already is mutable list
+            // set condition make sure position is exist in the range of the list
+            if (position >= 0 && position < names.size) {
+                names.removeAt(position) // Remove the selected name
+                (spinner.adapter as CustomAdapter).notifyDataSetChanged() // Notify adapter of data change
+            }
+        }
+
+         */
+
+        // add: handle if exist empty list
+        findViewById<View>(R.id.deleteButton).setOnClickListener {
+            val position = spinner.selectedItemPosition
+            if (position >= 0 && position < names.size) {
+                names.removeAt(position) // Remove the selected name
+                (spinner.adapter as CustomAdapter).notifyDataSetChanged() // Notify adapter of data change
+
+                // Check if the names list is empty
+                if (names.isEmpty()) {
+                    nameTextView.text = "" // Clear the TextView, and make it blank
+                    spinner.setSelection(-1) // Reset spinner selection
+                    // Optionally disable the spinner or update its state
+                    spinner.isEnabled = false // Disable the spinner
+                } else {
+                    spinner.isEnabled = true // Re-enable the spinner if there are names
+                }
+            }
         }
 
     }
