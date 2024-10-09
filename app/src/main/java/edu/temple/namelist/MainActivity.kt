@@ -41,9 +41,12 @@ class MainActivity : AppCompatActivity() {
                 (names as MutableList).removeAt(spinner.selectedItemPosition)
                 (spinner.adapter as BaseAdapter).notifyDataSetChanged()
             }
-            if (names.isNotEmpty())
-            {nameTextView.text = spinner.selectedItem.toString()}
-            else {nameTextView.text = ""}
+            if (names.isNotEmpty()) {
+                nameTextView.text = spinner.selectedItem.toString()
+            }
+            else {
+                nameTextView.text = ""
+            }
         }
 
     }
