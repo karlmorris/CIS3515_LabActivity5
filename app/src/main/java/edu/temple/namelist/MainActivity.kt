@@ -38,10 +38,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
+            if(names.size==0){
+                Toast.makeText(this,"There is no more names in the spinner",Toast.LENGTH_SHORT).show()
+            }
+            else{
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
             nameTextView.text=""
-        }
+        }}
 
     }
 }
