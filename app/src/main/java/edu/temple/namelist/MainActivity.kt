@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
             if(names.size > 0) {
+                nameTextView.text = ""
                 (names as MutableList).removeAt(spinner.selectedItemPosition)
                 (spinner.adapter as BaseAdapter).notifyDataSetChanged()
             }
