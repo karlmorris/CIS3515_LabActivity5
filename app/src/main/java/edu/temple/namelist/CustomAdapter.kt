@@ -25,15 +25,23 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
 
     // Return a view associated with an item in the collection
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-        return if (p1 != null) {
+        // Create a TextView if convertView is null
+        val textView: TextView = if (p1 != null) {
             p1 as TextView
         } else {
             TextView(context).apply {
                 textSize = 24f
-                setPadding(10,10,10,10)
+                setPadding(10, 10, 10, 10)
             }
-        }.apply {
-            text = getItem(p0).toString()
         }
+
+        // Check if the position is valid and set the text
+        if (p0 >= 0 && p0 < names.size) {
+            textView.text = getItem(p0).toString()
+        } else {
+            textView.text = "No names available" // Handle empty or invalid state
+        }
+
+        return textView
     }
 }

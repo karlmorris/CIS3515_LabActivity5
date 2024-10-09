@@ -37,8 +37,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val selectedPosition = spinner.selectedItemPosition
+
+            // Check if the position is valid
+            if (selectedPosition >= 0 && selectedPosition < names.size) {
+                // Remove the name at the selected position
+                (names as MutableList).removeAt(selectedPosition)
+
+                // Notify the adapter that the data has changed
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+                // Update the TextView to clear the name since the name is deleted
+                nameTextView.text = "" // Clear or set to a default message
+            }
         }
 
     }
