@@ -9,6 +9,9 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isEmpty
+import androidx.core.view.size
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,8 +40,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if(names.size > 0) {
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
+            else {
+                nameTextView.text = ""
+                Toast.makeText(this@MainActivity, "Unable to delete; no names.", Toast.LENGTH_SHORT).show()
+            }
+            if(spinner.count > 0){
+                var text : String = spinner.getItemAtPosition(spinner.selectedItemPosition).toString()
+                nameTextView.text = text
+            }
+            else {
+                nameTextView.text = ""
+            }
+
+
         }
 
     }
