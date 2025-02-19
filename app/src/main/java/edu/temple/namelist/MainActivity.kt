@@ -1,5 +1,6 @@
 package edu.temple.namelist
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.TextView
 class MainActivity : AppCompatActivity() {
 
     lateinit var names: List<String>
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,8 +39,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if (names.size != 0) {
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
+
+            if (names.isEmpty()){
+                nameTextView.text = "No more names available"
+            } else {
+                spinner.setSelection(0)
+                nameTextView.text = names[0]
+            }
+
         }
 
     }
