@@ -12,7 +12,8 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var names: List<String>
+    //Needed to be MutableList since names is a MutableList
+    lateinit var names: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,8 +37,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //Updated to remove from the data set rather than the spinner
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+            val currentPosition = spinner.selectedItemPosition
+            if (currentPosition in names.indices) {
+                names.removeAt(currentPosition)
+            }
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
         }
 
