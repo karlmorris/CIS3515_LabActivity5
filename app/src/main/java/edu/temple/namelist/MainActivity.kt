@@ -9,6 +9,8 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isInvisible
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,9 +38,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            //performing another check before removing an element from the array
+            if(names.isNotEmpty()) {
+                (names as MutableList).removeAt(spinner.selectedItemPosition)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
+            if(!spinner.adapter.isEmpty) {
+                //the crash stems from accessing the name at position 0
+                //and there is nothing at position 0
+                nameTextView.text = names[0]
+            }else{
+                it.isEnabled = false //disables the delete button
+                spinner.isInvisible = true //hides the spinner if the list is empty
+                nameTextView.text = "no more names in the list"
+            }
         }
 
     }
