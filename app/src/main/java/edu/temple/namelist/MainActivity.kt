@@ -12,7 +12,7 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var names: List<String>
+    lateinit var names: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
