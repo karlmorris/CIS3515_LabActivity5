@@ -37,10 +37,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
+
+
+            if (names.isEmpty()) {
+                nameTextView.text = ""
+                return@setOnClickListener
+            }
+
+
+            val pos = spinner.selectedItemPosition
+            if (pos == AdapterView.INVALID_POSITION) {
+                return@setOnClickListener
+            }
+
+
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
 
-            val pos = spinner.selectedItemPosition
 
             if (names.isNotEmpty()) {
                 val newPos = minOf(pos, names.lastIndex)
