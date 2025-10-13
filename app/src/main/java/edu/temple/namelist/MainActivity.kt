@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
         with (spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
@@ -28,17 +29,31 @@ class MainActivity : AppCompatActivity() {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     p0?.run {
                         nameTextView.text = getItemAtPosition(p2).toString()
+                        deleteButton.isEnabled = names.isNotEmpty()
+                        //the above is only enabled if names isn't empty
                     }
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+                    //nothing is selected when the spinner options are empty
+                    //thus disabling the button
+                    nameTextView.text = "No other people to delete"
+                    deleteButton.isEnabled = false
                 }
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        deleteButton.setOnClickListener {
+            val selectedIndex = spinner.selectedItemPosition
+            (names as MutableList).removeAt(selectedIndex)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+            if(names.isNotEmpty()){
+                //update text
+                nameTextView.text = names[selectedIndex.coerceIn(0, names.size-1)]
+            }else{
+                nameTextView.text = "No other people to delete"
+            }
         }
 
     }
