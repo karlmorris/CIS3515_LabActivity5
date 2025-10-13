@@ -17,10 +17,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        names = mutableListOf("Kevin Shaply", "Stacey Lou", "Gerard Clear", "Michael Studdard", "Michelle Studdard")
+        names = mutableListOf("Kevin Shaply", "Stacey Lou", "Gerard Clear", "Michael Studdard")
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
         with (spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
@@ -28,17 +29,26 @@ class MainActivity : AppCompatActivity() {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     p0?.run {
                         nameTextView.text = getItemAtPosition(p2).toString()
+                        deleteButton.isEnabled = names.isNotEmpty()
                     }
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+                    nameTextView.text = ""
+                    deleteButton.isEnabled = false
                 }
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
+        deleteButton.setOnClickListener {
+            val selectIndex = spinner.selectedItemPosition
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if (names.isNotEmpty()) {
+                nameTextView.text = names[selectIndex.coerceIn(0, names.size)]
+            } else {
+                nameTextView.text = ""
+            }
         }
 
     }
