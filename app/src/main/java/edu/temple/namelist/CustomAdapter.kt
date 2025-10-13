@@ -10,7 +10,16 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
 
     // How many items are in the collection
     override fun getCount(): Int {
-        return 5
+        /*
+            This line originally read:
+                return 5
+
+            Because getCount() returned 5 regardless of the actual size, when trying to display
+            the dropdown, it would look for 5 values to display. However, because deleting an item
+            reduces the number of items that exist, the adapter cannot find 5 values, and so it
+            would crash.
+         */
+        return names.size
     }
 
     // Fetch an item from the collection
