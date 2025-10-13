@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 names.removeAt(spinner.selectedItemPosition)
                 (spinner.adapter as BaseAdapter).notifyDataSetChanged()
 
-                // ✅ Manually update the TextView after deletion
+
                 if (names.isNotEmpty()) {
                     nameTextView.text = names[spinner.selectedItemPosition]
                 } else {
