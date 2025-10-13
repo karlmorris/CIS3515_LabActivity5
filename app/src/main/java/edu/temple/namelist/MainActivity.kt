@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                 nameTextView.text = names[selectedIndex.coerceIn(0, names.size-1)]
             } else {
                 nameTextView.text = ""
+
             }
         }
 
