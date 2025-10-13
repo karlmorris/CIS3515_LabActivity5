@@ -37,8 +37,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val position = spinner.selectedItemPosition
+
+            if (names.isNotEmpty()) {   // do not delete if is empty spinner
+
+                (names as MutableList).removeAt(position)   // remove name from list
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()   // update spinner
+
+                if (names.isNotEmpty()) {   // if spinner is still filled after delete
+                    spinner.setSelection(0)
+                    nameTextView.text = spinner.getItemAtPosition(0).toString()
+                }
+                else {   // if spinner is empty after delete
+                    spinner.setSelection(AdapterView.INVALID_POSITION)
+                    nameTextView.text = ""
+                }
+            }
         }
 
     }
