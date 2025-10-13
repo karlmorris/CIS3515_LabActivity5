@@ -40,9 +40,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        deleteButton.setOnClickListener {
+            val selected_idx = spinner.selectedItemPosition
+            (names as MutableList).removeAt(selected_idx)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if (names.isNotEmpty()) {
+                nameTextView.text = names[selected_idx]
+            }
         }
 
     }
