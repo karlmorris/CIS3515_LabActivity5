@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             if(names.isNotEmpty()){
                 nameTextView.text = names[selectedId.coerceIn(0, names.size-1)]
             }else{
-                nameTextView.text = " "
+                nameTextView.text = "  "
             }
         }
 
