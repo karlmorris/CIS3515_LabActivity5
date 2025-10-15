@@ -8,32 +8,18 @@ import android.widget.TextView
 
 class CustomAdapter(private val names: List<String>, private val context: Context) : BaseAdapter() {
 
-    // How many items are in the collection
-    override fun getCount(): Int {
-        return 5
-    }
+    override fun getCount(): Int = names.size
 
-    // Fetch an item from the collection
-    override fun getItem(p0: Int): Any {
-        return names[p0]
-    }
+    override fun getItem(position: Int): Any = names[position]
 
-    // Get the associated ID of an item in the collection
-    override fun getItemId(p0: Int): Long {
-        return p0.toLong()
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    // Return a view associated with an item in the collection
-    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-        return if (p1 != null) {
-            p1 as TextView
-        } else {
-            TextView(context).apply {
-                textSize = 24f
-                setPadding(10,10,10,10)
-            }
-        }.apply {
-            text = getItem(p0).toString()
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        return (convertView as? TextView ?: TextView(context).apply {
+            textSize = 24f
+            setPadding(10, 10, 10, 10)
+        }).apply {
+            text = getItem(position).toString()
         }
     }
 }
