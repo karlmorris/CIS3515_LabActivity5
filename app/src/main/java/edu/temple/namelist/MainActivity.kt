@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
         with (spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
@@ -36,10 +37,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        deleteButton.setOnClickListener{
+            val oldPosition = spinner.selectedItemPosition
+
+            (names as MutableList).removeAt(oldPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+            if (names.isNotEmpty()){
+                val newPosition = oldPosition.coerceAtMost(names.lastIndex)
+                spinner.setSelection(newPosition, false)
+                nameTextView.text = names[newPosition]
+            }
+            else {
+                nameTextView.text = ""
+                deleteButton.isEnabled = false
+            }
         }
+
+//        findViewById<View>(R.id.deleteButton).setOnClickListener {
+//            (names as MutableList).removeAt(spinner.selectedItemPosition)
+//            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+//        }
 
     }
 }
