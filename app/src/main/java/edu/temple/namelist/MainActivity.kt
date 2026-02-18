@@ -17,14 +17,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        names = mutableListOf("Kevin Shaply", "Stacey Lou", "Gerard Clear", "Michael Studdard", "Michelle Studdard")
+        names = mutableListOf(
+            "Kevin Shaply",
+            "Stacey Lou",
+            "Gerard Clear",
+            "Michael Studdard",
+            "Michelle Studdard"
+        )
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
 
-        with (spinner) {
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
+
+        with(spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
-            onItemSelectedListener = object: OnItemSelectedListener {
+            onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     p0?.run {
                         nameTextView.text = getItemAtPosition(p2).toString()
@@ -36,10 +44,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
+        deleteButton.setOnClickListener {
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
-        }
+            val oldPos = spinner.selectedItemPosition
+            if (names.isNotEmpty()) {
+                val newPos = oldPos.coerceAtMost(names.lastIndex)
+                spinner.setSelection(newPos, false)
+                nameTextView.text = names[newPos]
+            }   else{
+                nameTextView.text = ""
+                deleteButton.isEnabled = false
+            }
 
+        }
     }
 }
