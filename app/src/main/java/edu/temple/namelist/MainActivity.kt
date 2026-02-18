@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 
@@ -21,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
+        val deleteButton = findViewById<View>(R.id.deleteButton)
 
         with (spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
@@ -36,9 +36,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        deleteButton.setOnClickListener {
+            val oldPos = spinner.selectedItemPosition
+
+            (names as MutableList).removeAt(oldPos)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+//            (names as MutableList).removeAt(spinner.selectedItemPosition)
+//            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+            if (names.isNotEmpty()){
+                val newPos = oldPos.coerceAtMost(names.lastIndex)
+                spinner.setSelection(newPos,false)
+                nameTextView.text = names[newPos]
+
+            }else{
+                nameTextView.text = ""
+                deleteButton.isEnabled = false
+            }
+
+            /**
+             * Bug
+             *     - current selection is removed by the delete button doesn't
+             *      change the index of the item position after it's deleted
+             *     - original code didn't disable the delete button when the
+             *     list of names is empty
+             */
         }
 
     }
