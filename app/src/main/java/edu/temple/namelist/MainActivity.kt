@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 spinner.setSelection(newPos, false)
                 nameTextView.text = names[newPos]
             } else {
-                nameTextView.text = ""
+                nameTextView.text = " "
                 deleteButton.isEnabled = false
             }
         }
