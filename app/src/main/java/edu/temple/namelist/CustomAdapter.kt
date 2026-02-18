@@ -9,11 +9,20 @@ import android.widget.TextView
 class CustomAdapter(private val names: List<String>, private val context: Context) : BaseAdapter() {
 
     // How many items are in the collection
-    override fun getCount(): Int {
-        return 5
-    }
+
+    // this is a bug because its hard coded to 5
+//    override fun getCount(): Int {
+//        return 5
+//    }
+
+    // fixed using ref instead of set val
+    // ret dynamize size list
+    override fun getCount(): Int = names.size
 
     // Fetch an item from the collection
+
+
+    // i assume p0 mean position, maybe refactor is good but i didn't touch the code.
     override fun getItem(p0: Int): Any {
         return names[p0]
     }

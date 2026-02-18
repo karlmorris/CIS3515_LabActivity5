@@ -33,12 +33,25 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
+
             }
         }
 
+    // this crash when we press delete while having no object left
+
+//        findViewById<View>(R.id.deleteButton).setOnClickListener {
+//            (names as MutableList).removeAt(spinner.selectedItemPosition)
+//            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+//        }
+
+
+        // my code remove base on pos, where pos is checked first to prevent the bug
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            val pos = spinner.selectedItemPosition
+            if (pos >= 0 && pos < names.size) {
+                (names as MutableList).removeAt(pos)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            }
         }
 
     }
