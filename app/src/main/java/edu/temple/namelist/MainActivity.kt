@@ -12,7 +12,7 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var names: MutableList<String>
+    lateinit var names: List<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
         val nameTextView = findViewById<TextView>(R.id.textView)
-        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
         with (spinner) {
             adapter = CustomAdapter(names, this@MainActivity)
@@ -37,26 +36,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        deleteButton.setOnClickListener {
-
-            val oldPos = spinner.selectedItemPosition
-
-            (names as MutableList).removeAt(oldPos)
+        findViewById<View>(R.id.deleteButton).setOnClickListener {
+            (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
-
-            if (names.isNotEmpty()) {
-                val newPos = oldPos.coerceAtMost(names.lastIndex)
-                spinner.setSelection(newPos, false)
-                nameTextView.text = names[newPos]
-            } else {
-                nameTextView.text = ""
-                deleteButton.isEnabled = false
-            }
         }
-
-
-
-
 
     }
 }
