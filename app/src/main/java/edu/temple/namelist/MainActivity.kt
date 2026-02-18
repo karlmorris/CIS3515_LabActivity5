@@ -12,7 +12,7 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var names: List<String>
+    lateinit var names: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,9 +37,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
-        }
+            if (names.isNotEmpty()) {
 
+                val position = spinner.selectedItemPosition
+                //wont crash if were deleting from an empty list
+                if (position >= 0 && position < names.size) {
+                    names.removeAt(position)
+                    (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+                    if (names.isNotEmpty()) {
+                        //changes the name displayed after deletion
+                        nameTextView.text = names[spinner.selectedItemPosition]
+                    } else {
+                        //provent crash if name is empty
+                        nameTextView.text = ""
+                    }
+                }
+            }
+        }
     }
 }
