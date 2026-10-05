@@ -36,9 +36,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
+
+        deleteButton.setOnClickListener {
+            val oldPosition = spinner.selectedItemPosition
+            (names as MutableList).removeAt(oldPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            if(names.isEmpty()){
+                nameTextView.text = ""
+                deleteButton.isEnabled = false
+            }
+            else{
+                val newPosition = oldPosition.coerceAtMost(names.lastIndex)
+                spinner.setSelection(newPosition, false)
+                nameTextView.text = names[newPosition]
+            }
         }
 
     }
