@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NameList</string>
+    <string name="no_names_remaining">No names remaining</string>
 </resources>
