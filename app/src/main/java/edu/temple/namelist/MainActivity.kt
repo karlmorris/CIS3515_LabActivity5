@@ -9,9 +9,8 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-
 class MainActivity : AppCompatActivity() {
-
+//bugfix
     lateinit var names: List<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +35,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
+
+        deleteButton.setOnClickListener {
+            val oldPos = spinner.selectedItemPosition
+            (names as MutableList).removeAt(oldPos)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+
+            if (names.isEmpty()){
+                nameTextView.text = ""
+                deleteButton.isEnabled = false
+            }
+            else {
+                val newPos = oldPos.coerceAtMost(names.lastIndex)
+                spinner.setSelection(newPos,false)
+                nameTextView.text = names[newPos]
+            }
         }
 
     }
