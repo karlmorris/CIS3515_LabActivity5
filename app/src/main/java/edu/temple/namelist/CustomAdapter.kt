@@ -1,5 +1,6 @@
 package edu.temple.namelist
 
+import android.R.attr.name
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ class CustomAdapter(private val names: List<String>, private val context: Contex
 
     // How many items are in the collection
     override fun getCount(): Int {
-        return 5
+        return names.size
     }
 
     // Fetch an item from the collection
