@@ -9,9 +9,8 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-
 class MainActivity : AppCompatActivity() {
-
+//bugfix
     lateinit var names: List<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
