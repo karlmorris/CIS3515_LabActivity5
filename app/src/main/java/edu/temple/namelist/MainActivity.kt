@@ -35,10 +35,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
             (names as MutableList).removeAt(spinner.selectedItemPosition)
             (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+        }
+        if (names.isEmpty()){
+            nameTextView.text = ""
+            deleteButton.isEnabled = false
         }
 
     }
