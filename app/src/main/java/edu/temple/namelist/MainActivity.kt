@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         deleteButton.setOnClickListener {
             val oldPos = spinner.selectedItemPosition
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+                (names as MutableList).removeAt(oldPos)
+                (spinner.adapter as BaseAdapter).notifyDataSetChanged()
 
             if(names.isEmpty()) {
                 nameTextView.text = ""
